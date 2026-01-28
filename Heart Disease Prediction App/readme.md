@@ -153,7 +153,7 @@ Run `python evaluate.py` to view the detailed metrics and confusion matrix visua
 
 ---
 
-## � Deployment on AWS
+## Deployment on AWS
 
 This application has been successfully deployed on AWS EC2. Follow the steps below to deploy on your own AWS instance:
 
