@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heart Disease Risk Assessment | CardioPredict AI</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', path='style_formpage.css') }}">
+</head>
+
+<body>
+
+<div class="form-header">
+    <h1><i class="fas fa-heartbeat"></i> Heart Disease Prediction System</h1>
+    <p>Complete this comprehensive medical form to receive your personalized heart disease risk assessment. All fields are required for accurate prediction.</p>
+</div>
+
+<div class="main-container">
+    <div class="form-section">
+        <div class="form-container">
+            <h2><i class="fas fa-user-md"></i> Patient Health Assessment Form</h2>
+
+            <form id="medicalForm">
+
+                <!-- Group 1 -->
+                 <div class="label-group"> 
+                    <label>Name <span class="required-indicator">*</span></label>
+                    <input type="text" id="patientName" placeholder="Enter your full name" class="placeholders" required>
+                </div>
+
+                <!-- Group 2 -->
+                 <div class="label-group">
+                    <label>Age <span class="required-indicator">*</span> <span class="input-unit">(30-100 years)</span></label>
+                    <input type="number" id="age" min="30" max="100" placeholder="Enter your age" class="placeholders" required>
+                 </div>
+
+                <!-- Group 3 --> 
+                <div class="label-group">
+                    <label>Gender <span class="required-indicator">*</span></label>
+                    <div class="button-group" data-group="gender">
+                        <button type="button" class="option-btn" data-value="1"><i class="fas fa-male"></i> Male</button>
+                        <button type="button" class="option-btn" data-value="0"><i class="fas fa-female"></i> Female</button>
+                    </div>
+                </div>
+
+                <!-- Group 4 -->
+                <div class="label-group">
+                    <label>Chest Pain Type <span class="required-indicator">*</span></label>
+                    <div class="button-group" data-group="cp">
+                        <button type="button" class="option-btn" data-value="0"><i class="fas fa-heartbeat"></i> Typical Angina</button>
+                        <button type="button" class="option-btn" data-value="1"><i class="fas fa-heartbeat"></i> Atypical Angina</button>
+                        <button type="button" class="option-btn" data-value="2"><i class="fas fa-heartbeat"></i> Non-anginal pain</button>
+                        <button type="button" class="option-btn" data-value="3"><i class="fas fa-heartbeat"></i> Asymptomatic</button>
+                    </div>
+                </div>
+
+                <!-- Group 5 -->
+                <div class="label-group">
+                    <label>Blood Pressure <span class="required-indicator">*</span> <span class="input-unit">(90-370 mmHg)</span></label>
+                    <input type="number" id="trestbps" min="90" max="370" placeholder="Enter your resting blood pressure" class="placeholders" required>
+                </div>
+
+                <!-- Group 6 -->
+                <div class="label-group">
+                    <label>Serum Cholesterol <span class="required-indicator">*</span> <span class="input-unit">(100-450 mg/dL)</span></label>
+                    <input type="number" id="chol" min="100" max="450" placeholder="Enter your cholesterol level" class="placeholders" required>
+                </div>
+
+                <!-- Group 7 -->
+                <div class="label-group">
+                    <label>Fasting Blood Sugar <span class="required-indicator">*</span> <span class="input-unit">(70 mg/dL - 600 mg/dL)</span></label>
+                    <input type="number" id="fbs" min="40" max="1000" class="placeholders" placeholder="Enter your fasting blood sugar level" required>
+                </div>
+
+                <!-- Group 8 -->
+                <div class="label-group">
+                    <label>Resting ECG Result <span class="required-indicator">*</span></label>
+                    <div class="button-group" data-group="restecg">
+                        <button type="button" class="option-btn" data-value="0"><i class="fas fa-check-circle"></i> Normal</button>
+                        <button type="button" class="option-btn" data-value="1"><i class="fas fa-exclamation-triangle"></i> ST-T Abnormality</button>
+                        <button type="button" class="option-btn" data-value="2"><i class="fas fa-heart"></i> LV Hypertrophy</button>
+                    </div>
+                </div>
+
+                <!-- Group 9 -->
+                <div class="label-group">
+                    <label>Maximum Heart Rate Achieved <span class="required-indicator">*</span> <span class="input-unit">(60-220 bpm)</span></label>
+                    <input type="number" id="thalach" min="60" max="220" class="placeholders" placeholder="Enter your maximum heart rate during exercise" required>
+                </div>
+
+                <!-- Group 10 -->
+                <div class="label-group">
+                    <label>Exercise Induced Angina <span class="required-indicator">*</span></label>
+                    <div class="button-group" data-group="exang">
+                        <button type="button" class="option-btn" data-value="1"><i class="fas fa-exclamation-circle"></i> Yes</button>
+                        <button type="button" class="option-btn" data-value="0"><i class="fas fa-check-circle"></i> No</button>
+                    </div>
+                </div> 
+
+                <!-- Group 11 -->
+                <div class="label-group">
+                    <label>ST Depression by Exercise <span class="required-indicator">*</span> <span class="input-unit">(0-5 mm)</span></label>
+                    <input type="number" id="oldpeak" min="0" max="5" step="0.1" class="placeholders" placeholder="Enter ST depression value (e.g., 1.5)" required>
+                </div> 
+
+                <!-- Group 12 -->
+                <div class="label-group">
+                    <label>Slope of Peak Exercise ST Segment <span class="required-indicator">*</span></label>
+                    <div class="button-group" data-group="slope">
+                        <button type="button" class="option-btn" data-value="0"><i class="fas fa-arrow-up"></i> Upsloping</button>
+                        <button type="button" class="option-btn" data-value="1"><i class="fas fa-minus"></i> Flat</button>
+                        <button type="button" class="option-btn" data-value="2"><i class="fas fa-arrow-down"></i> Downsloping</button>
+                    </div>
+                </div> 
+
+                <!-- Group 13 -->
+                <div class="label-group">
+                    <label>Major Vessels Colored by Fluoroscopy <span class="required-indicator">*</span> <span class="input-unit">(0-3)</span></label>
+                    <input type="number" id="ca" min="0" max="3" class="placeholders" placeholder="Enter number of major vessels (0-3)" required>
+                </div> 
+
+                <!-- Group 14 -->
+                <div class="label-group">
+                    <label>Thalassemia (Thal) <span class="required-indicator">*</span></label>
+                    <div class="button-group" data-group="thal">
+                        <button type="button" class="option-btn" data-value="0"><i class="fas fa-times-circle"></i> Error</button>
+                        <button type="button" class="option-btn" data-value="1"><i class="fas fa-heart-broken"></i> Fixed Defect</button>
+                        <button type="button" class="option-btn" data-value="2"><i class="fas fa-heart"></i> Normal</button>
+                        <button type="button" class="option-btn" data-value="3"><i class="fas fa-exchange-alt"></i> Reversible Defect</button>
+                    </div>
+                </div>
+
+                <div class="label-group">
+                    <button id="Submit" type="submit"><i class="fas fa-stethoscope"></i> Generate Risk Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Result Modal -->
+<div class="modal-overlay" id="resultModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-heartbeat"></i> Heart Disease Risk Assessment Result</h2>
+        </div>
+        <div class="modal-body">
+            <div id="resultContent">
+                <!-- Result will be dynamically inserted here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="close-btn" id="closeModal">Close Assessment</button>
+            <button class="new-assessment-btn" id="newAssessment">Start New Assessment</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* Selection logic */
+document.querySelectorAll(".button-group").forEach(group => {
+    const buttons = group.querySelectorAll(".option-btn");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+
+            /* Remove selection from all buttons in this group */
+            buttons.forEach(btn => btn.classList.remove("selected"));
+
+            /* Mark this button as selected */
+            button.classList.add("selected");
+        });
+    });
+});
+
+// Function to get selected button value from a group
+function getSelectedButtonValue(groupName) {
+    const button = document.querySelector(`.button-group[data-group="${groupName}"] .selected`);
+    return button ? parseFloat(button.getAttribute('data-value')) : null;
+}
+
+// Function to convert fasting blood sugar value based on condition
+function getFbsValue(fbsInput) {
+    const fbs = parseFloat(fbsInput);
+    // If fasting blood sugar > 120, value = 1, else value = 0
+    return fbs > 120 ? 1 : 0;
+}
+
+// Function to prepare data in the required format
+function prepareDataForBackend() {
+    const patientName = document.getElementById('patientName').value;
+    
+    // Collect all values according to your specifications
+    const features = [
+        parseFloat(document.getElementById('age').value),              // 1. age
+        getSelectedButtonValue('gender'),                              // 2. gender
+        getSelectedButtonValue('cp'),                                  // 3. cp
+        parseFloat(document.getElementById('trestbps').value),         // 4. trestbps
+        parseFloat(document.getElementById('chol').value),             // 5. chol
+        getFbsValue(document.getElementById('fbs').value),            // 6. fbs (converted based on condition)
+        getSelectedButtonValue('restecg'),                             // 7. restecg
+        parseFloat(document.getElementById('thalach').value),          // 8. thalach
+        getSelectedButtonValue('exang'),                               // 9. exang
+        parseFloat(document.getElementById('oldpeak').value),          // 10. oldpeak
+        getSelectedButtonValue('slope'),                               // 11. slope
+        parseFloat(document.getElementById('ca').value),               // 12. ca
+        getSelectedButtonValue('thal')                                 // 13. thal
+    ];
+    
+    // Return both the name and the features array
+    return {
+        name: patientName,
+        features: [features]  // Wrap in array to create 2D array
+    };
+}
+
+// Function to show result modal
+function showResultModal(name, prediction) {
+    const modal = document.getElementById('resultModal');
+    const resultContent = document.getElementById('resultContent');
+    
+    // Clear previous content
+    resultContent.innerHTML = '';
+    
+    if (prediction === 1) {
+        // Heart disease detected
+        resultContent.innerHTML = `
+            <div class="result-positive">
+                <div class="result-icon">
+                    <i class="fas fa-heart-broken"></i>
+                </div>
+                <div class="result-message">
+                    Dear <strong>${name}</strong>,<br>
+                    We're sorry to inform you that our assessment indicates a <strong>high risk of heart disease</strong>.
+                </div>
+                <div class="result-details">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Important Recommendations</h3>
+                    <p>1. <strong>Consult a cardiologist</strong> as soon as possible for a comprehensive evaluation</p>
+                    <p>2. Discuss these results with your primary care physician</p>
+                    <p>3. Consider immediate lifestyle modifications including healthy diet and regular exercise</p>
+                    <p>4. Monitor your blood pressure and cholesterol levels regularly</p>
+                    <p>5. Avoid smoking and limit alcohol consumption</p>
+                </div>
+            </div>
+        `;
+    } else {
+        // No heart disease detected
+        resultContent.innerHTML = `
+            <div class="result-negative">
+                <div class="result-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="result-message">
+                    Dear <strong>${name}</strong>,<br>
+                    We're happy to inform you that our assessment indicates <strong>low risk of heart disease</strong>.
+                </div>
+                <div class="result-details">
+                    <h3><i class="fas fa-thumbs-up"></i> Heart Health Maintenance</h3>
+                    <p>1. <strong>Continue with regular health checkups</strong> and preventive screenings</p>
+                    <p>2. Maintain a heart-healthy lifestyle with balanced nutrition and physical activity</p>
+                    <p>3. Monitor key health indicators regularly</p>
+                    <p>4. Stay informed about heart health best practices</p>
+                    <p>5. Consider regular stress management techniques</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close modal functionality
+document.getElementById('closeModal').addEventListener('click', function() {
+    const modal = document.getElementById('resultModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+});
+
+// New assessment functionality
+document.getElementById('newAssessment').addEventListener('click', function() {
+    const modal = document.getElementById('resultModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+    
+    // Reset form
+    document.getElementById('medicalForm').reset();
+    document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+});
+
+// Close modal when clicking outside
+document.getElementById('resultModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// Form validation and submission
+document.getElementById("medicalForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    // Check if all required fields are filled
+    const requiredInputs = document.querySelectorAll('input[required]');
+    let allFilled = true;
+    
+    requiredInputs.forEach(input => {
+        if (!input.value.trim()) {
+            allFilled = false;
+            input.style.borderColor = "#ff6b6b";
+            input.style.backgroundColor = "#fff5f5";
+        } else {
+            input.style.borderColor = "#e0e0e0";
+            input.style.backgroundColor = "#f8f9fa";
+        }
+    });
+    
+    // Check if all button groups have a selection
+    const buttonGroups = document.querySelectorAll('.button-group');
+    let allSelected = true;
+    
+    buttonGroups.forEach(group => {
+        const selectedBtn = group.querySelector('.selected');
+        if (!selectedBtn) {
+            allSelected = false;
+            group.style.border = "2px solid #ff6b6b";
+            group.style.borderRadius = "8px";
+            group.style.padding = "5px";
+        } else {
+            group.style.border = "none";
+            group.style.padding = "0";
+        }
+    });
+    
+    if (!allFilled || !allSelected) {
+        alert("Please fill in all required fields before submitting.");
+        return;
+    }
+    
+    // Get the data in required format
+    const formData = prepareDataForBackend();
+    const patientName = formData.name;
+    const featuresArray = formData.features;
+    
+    // Show loading state
+    const submitBtn = document.getElementById("Submit");
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner"></span> Processing Assessment...';
+    submitBtn.disabled = true;
+    
+    try {
+        // Send data to backend API
+        // Note: Update the URL to match your actual backend endpoint
+        const response = await fetch('/prediction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                features: featuresArray
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        // Show result modal with prediction
+        showResultModal(patientName, result.prediction);
+        
+    } catch (error) {
+        // Fallback simulation if backend is not available
+        console.error('Backend error:', error);
+        console.log('Using simulated result for demonstration...');
+        
+        // For demo purposes, simulate a prediction (randomly 0 or 1)
+        const simulatedPrediction = Math.random() > 0.5 ? 1 : 0;
+        
+        // Show simulated result
+        showResultModal(patientName, simulatedPrediction);
+        
+        // Show error message
+        const resultContent = document.getElementById('resultContent');
+        const existingContent = resultContent.innerHTML;
+        resultContent.innerHTML = `
+            <div style="background-color: #fff3cd; padding: 1rem; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 1rem;">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Note:</strong> Backend connection failed. Showing simulated result for demonstration.</p>
+            </div>
+            ${existingContent}
+        `;
+    } finally {
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
+
+// Input validation helpers
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', function() {
+        const min = parseInt(this.min);
+        const max = parseInt(this.max);
+        const value = parseFloat(this.value);
+        
+        if (this.value && (value < min || value > max)) {
+            this.style.borderColor = "#ff6b6b";
+            this.style.backgroundColor = "#fff5f5";
+        } else {
+            this.style.borderColor = "#e0e0e0";
+            this.style.backgroundColor = "#f8f9fa";
+        }
+    });
+});
+
+// Add visual feedback for required fields on blur
+document.querySelectorAll('input[required]').forEach(input => {
+    input.addEventListener('blur', function() {
+        if (!this.value.trim()) {
+            this.style.borderColor = "#ff6b6b";
+            this.style.backgroundColor = "#fff5f5";
+        }
+    });
+});
+</script>
+
+</body>
+</html>
