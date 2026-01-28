@@ -199,7 +199,7 @@ The application will now be accessible from anywhere with internet access!
 
 ---
 
-## �🔮 Future Enhancements
+## 🔮 Future Enhancements
 
 - Integrate feature scaling and pipelines  
 - Compare multiple ML models (SVM, Random Forest, XGBoost) 
