@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | FreshCart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* No Scroll Layout */
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            flex-shrink: 0;
+            padding: 0.5rem 0;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            /* Prevent internal scroll */
+            padding-bottom: 0 !important;
+        }
+
+        .section-header {
+            margin-bottom: 1.5rem !important;
+            /* Reduced margin */
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Selected Item Styles - Enlarged */
+        .selected-card {
+            width: 22%;
+            /* Fixed width relative to container */
+            transform: scale(1.1);
+            border: 2px solid var(--primary);
+            z-index: 10;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .selected-card .product-image {
+            height: 200px;
+            /* Adjusted height */
+        }
+
+        .selected-card .product-details {
+            padding: 1rem;
+        }
+
+        .selected-card .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .selected-card .product-desc {
+            font-size: 1rem;
+            -webkit-line-clamp: 3;
+            /* Limit lines to fit */
+            margin-bottom: 0.8rem;
+            min-height: auto;
+        }
+
+        .selected-card .price {
+            font-size: 1.4rem;
+        }
+
+        .selected-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        /* Recommendation Styles - Small */
+        .rec-card {
+            width: 18%;
+            /* Smaller width */
+            transform: scale(0.9);
+            opacity: 0.9;
+            transition: all 0.3s;
+        }
+
+        .rec-card:hover {
+            transform: scale(0.95);
+            opacity: 1;
+        }
+
+        .rec-card .product-image {
+            height: 150px;
+            /* Smaller image */
+        }
+
+        .rec-card .product-details {
+            padding: 0.8rem;
+        }
+
+        .rec-card .product-title {
+            font-size: 1rem;
+        }
+
+        .rec-card .product-desc {
+            font-size: 0.85rem;
+            -webkit-line-clamp: 2;
+            min-height: 2.4em;
+        }
+
+        button.add-btn {
+            width: 35px;
+            height: 35px;
+        }
+
+        footer {
+            flex-shrink: 0;
+            padding: 1rem 0;
+            background: #1a1a1a;
+            margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="/"
+                    style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+                    <i class="fa-solid fa-leaf"></i> Samazon Store
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="section-header">
+            <h2>You May Also Like</h2>
+            <p>Selected Product & Recommendations</p>
+        </div>
+
+        <div class="product-grid">
+            <!-- 1. The Selected Product (Enlarged) -->
+            <article class="product-card selected-card" onclick="window.location.href='/product/{{ product.id }}'"
+                style="cursor: default;">
+                <div class="product-image">
+                    <span class="selected-badge">Selected</span>
+                    <img src="{{ product.image }}" alt="{{ product.name }}" style="object-fit: cover;">
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <p class="product-desc" title="{{ product.description }}">{{ product.description }}</p>
+                    <div class="price-row">
+                        <span class="price">₹{{ product.price }}</span>
+                        <!-- Larger button for selected -->
+                        <button class="add-btn" aria-label="Add to cart" onclick="event.stopPropagation()"
+                            style="width: 45px; height: 45px;">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. Recommendations (Smaller) -->
+            {% for item in recommendations %}
+            <article class="product-card rec-card" onclick="window.location.href='/product/{{ item.id }}'"
+                style="cursor: pointer;">
+                <div class="product-image">
+                    {% if item.is_recommended %}
+                    <span class="product-tag" style="background-color: var(--accents);">Recommended</span>
+                    {% endif %}
+                    <img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy">
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">{{ item.name }}</h3>
+                    <p class="product-desc" title="{{ item.description }}">{{ item.description }}</p>
+                    <div class="price-row">
+                        <span class="price">₹{{ item.price }}</span>
+                        <button class="add-btn" aria-label="Add to cart" onclick="event.stopPropagation()">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content" style="text-align: center; display: block; margin-bottom: 0;">
+            <p style="font-size: 1rem; margin-bottom: 0.5rem;">"Let food be thy medicine and medicine be thy food."</p>
+
+        </div>
+    </footer>
+</body>
+
+</html>
